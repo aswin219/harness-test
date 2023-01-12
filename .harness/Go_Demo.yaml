@@ -36,3 +36,12 @@ pipeline:
                       go get gotest.tools/gotestsum
                       gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
                       CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Build and Push an Image to Docker Registry
+                  identifier: Build_and_Push_an_Image_to_Docker_Registry
+                  spec:
+                    connectorRef: aswindockerreg
+                    repo: aswinmkolathur/ciquickstart
+                    tags:
+                      - <+pipeline.sequenceId>
